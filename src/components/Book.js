@@ -1,5 +1,5 @@
 import React from 'react';
-
+import * as BooksAPI from '../BooksAPI'
 
 class Book extends React.Component {
   render() {
@@ -9,16 +9,10 @@ class Book extends React.Component {
           <div className="book-top">
             <div
               className="book-cover"
-              style= {{
-                width: 128,
-                height: 188,
-                backgroundImage: `url("${(this.props.book.imageLinks &&
-                  this.props.book.imageLinks.thumbnail) ||
-                  "No image available"}")`,
-                }}>
-              </div>
+              style= {{ width: 128, height: 188, backgroundImage: `url("${(this.props.book.imageLinks && this.props.book.imageLinks.thumbnail) || "No image available"}")`,}}>
+            </div>
               <div className="book-shelf-changer">
-                <select>
+                <select value = {this.props.book.shelf || "none"} onChange={(e)=>{ this.props.updateBook(this.props.book, e.target.value) }}>
                   <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>

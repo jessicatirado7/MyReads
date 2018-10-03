@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import * as BooksAPI from '../../BooksAPI'
-import Shelf from '../Shelf';
+import Shelf from '../Shelf'
 
 class mainPage extends React.Component {
   constructor(props) {
@@ -11,8 +11,24 @@ class mainPage extends React.Component {
     }
   }
   componentDidMount() {
-    BooksAPI.getAll().then((books)=> {this.setState({ books: books });})
+    BooksAPI.getAll()
+    .then((books)=> {
+      this.setState({
+        books: books
+      });
+    })
   }
+
+  updateBook = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+    .then((book) => {
+      book.shelf = shelf;
+      this.setState((state) => ({
+        books: state.books.filter((b) => b.id !== book.id).concat([book]),
+      }))
+    });
+  }
+
   render() {
     return(
       <div className="list-books">
@@ -21,19 +37,9 @@ class mainPage extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            <Shelf
-              name="Currently Reading"
-              books={this.state.books.filter(
-                (books) => books.shelf === "currentlyReading")}
-            />
-            <Shelf name="Want to read"
-              books={this.state.books.filter(
-                (books) => books.shelf === "wantToRead")}
-            />
-            <Shelf name="Read"
-              books={this.state.books.filter(
-                (books) => books.shelf === "read")}
-            />
+            <Shelf updateBook ={this.updateBook} name="Currently Reading" books={this.state.books.filter((books) => books.shelf === "currentlyReading")} />
+            <Shelf updateBook ={this.updateBook} name="Want to read" books={this.state.books.filter((books) => books.shelf === "wantToRead")} />
+            <Shelf updateBook ={this.updateBook} name="Read" books={this.state.books.filter( (books) => books.shelf === "read")} />
           </div>
         </div>
         <div className="open-search">
