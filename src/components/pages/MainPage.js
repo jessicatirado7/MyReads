@@ -11,11 +11,7 @@ class mainPage extends React.Component {
     }
   }
   componentDidMount() {
-    BooksAPI.getAll()
-    .then((books)=> {
-      console.log(books)
-      this.setState({ Books: books })
-    })
+    BooksAPI.getAll().then((books)=> {this.setState({ books: books });})
   }
   render() {
     return(
@@ -25,9 +21,19 @@ class mainPage extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            <Shelf name="Currently Reading" books={this.state.books.filter(b => b.shelf === "currentlyReading")}/>
-            <Shelf name="Want to read" books={this.state.books.filter(b => b.shelf === "wantToRead")}/>
-            <Shelf name="Read" books={this.state.books.filter(b => b.shelf === "read")}/>
+            <Shelf
+              name="Currently Reading"
+              books={this.state.books.filter(
+                (books) => books.shelf === "currentlyReading")}
+            />
+            <Shelf name="Want to read"
+              books={this.state.books.filter(
+                (books) => books.shelf === "wantToRead")}
+            />
+            <Shelf name="Read"
+              books={this.state.books.filter(
+                (books) => books.shelf === "read")}
+            />
           </div>
         </div>
         <div className="open-search">
