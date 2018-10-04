@@ -14,22 +14,10 @@ class searchPage extends React.Component {
   }
   componentDidMount() {
     BooksAPI.getAll()
-    .then((books)=> {
-      this.setState({
-        books: books
-      });
+    .then(response=> {
+      this.setState({ books: response });
     })
-  }
-
-  updateBook = (book, shelf) => {
-    BooksAPI.update(book, shelf)
-    .then((book) => {
-      book.shelf = shelf;
-      this.setState(state => ({
-        books: state.books.filter((b) => b.id !== book.id).concat([book]),
-      }))
-    });
-  }
+  };
 
   updateQuery = (query) => {
     this.setState({ query: query }, this.submitSearch);
@@ -44,15 +32,23 @@ class searchPage extends React.Component {
         return this.setState({ results: [] });
       } else {
         response.forEach((b) => {
-          let find = this.state.books.filter((book) => book.id === b.id);
-          if (find[0]) {
-            b.shelf = find[0].shelf;
-          }
+          let f = this.state.books.filter((book) => book.id === b.id);
+          if (f[0]) { b.shelf = f[0].shelf;}
         });
         return this.setState({ results: response });
       }
     });
   }
+
+  updateBook = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+    .then(response => {
+      book.shelf = shelf;
+      this.setState(state => ({
+        books: state.books.filter((b) => b.id !== book.id).concat([book]),
+      }));
+    });
+  };
 
   render() {
     return(
@@ -65,8 +61,8 @@ class searchPage extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.results.map((item, key) => (
-              <Book updateBook={this.updateBook} key={key} book={item} />
+            {this.state.results.map((book, key) => (
+              <Book updateBook={this.updateBook} book={book} key={key} />
             ))}
           </ol>
         </div>

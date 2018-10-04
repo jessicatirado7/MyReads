@@ -1,5 +1,5 @@
 import React from 'react';
-import * as BooksAPI from '../BooksAPI'
+
 
 class Book extends React.Component {
   render() {
@@ -7,11 +7,9 @@ class Book extends React.Component {
       <li>
         <div className="book">
           <div className="book-top">
-            <div
-              className="book-cover"
-              style= {{ width: 128, height: 188, backgroundImage: `url("${(this.props.book.imageLinks && this.props.book.imageLinks.thumbnail) || "No image available"}")`,}}>
+            <div className="book-cover" style= {{ width: 128, height: 188, backgroundImage: `url("${(this.props.book.imageLinks && this.props.book.imageLinks.thumbnail) || "No image available"}")`,}}>
             </div>
-              <div className="book-shelf-changer">
+            <div className="book-shelf-changer">
                 <select value = {this.props.book.shelf || "none"} onChange={(e)=>{ this.props.updateBook(this.props.book, e.target.value) }}>
                   <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
@@ -19,13 +17,13 @@ class Book extends React.Component {
                   <option value="read">Read</option>
                   <option value="none">None</option>
                 </select>
-              </div>
-            </div>
-            <div className="book-title">{this.props.book.title} </div>
-            <div className="book-authors">
-              {(this.props.book.authors && this.props.book.authors[0]) || "Sorry, no author listed."}
             </div>
           </div>
+          <div className="book-title">{this.props.book.title}</div>
+          <div className="book-authors">
+              {(this.props.book.authors && this.props.book.authors[0]) || "Sorry, no author listed."};
+          </div>
+        </div>
       </li>
     );
   }
