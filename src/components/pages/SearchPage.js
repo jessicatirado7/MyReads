@@ -12,6 +12,7 @@ class searchPage extends React.Component {
       query: "",
     }
   }
+
   componentDidMount() {
     BooksAPI.getAll()
     .then(response=> {
@@ -26,18 +27,23 @@ class searchPage extends React.Component {
   submitSearch() {
     if (this.state.query === "" || this.state.query === undefined) {
       return this.setState({ results: [] });
-    }
-    BooksAPI.search(this.state.query.trim()).then((response) => {
-      if (response.error) {
-        return this.setState({ results: [] });
-      } else {
-        response.forEach((b) => {
-          let f = this.state.books.filter((book) => book.id === b.id);
-          if (f[0]) { b.shelf = f[0].shelf;}
-        });
-        return this.setState({ results: response });
-      }
-    });
+    } else {
+      BooksAPI.search(this.state.query.trim()).then(response => {
+        if (response.error) {
+          return this.setState({ results: [] });
+        } else {
+          response.forEach((b) => {
+            let f = this.state.books.filter(book => book.id === b.id);
+            if (f[0]) { b.shelf = f[0].shelf;}
+          });
+          if (this.state.query === '' ) {
+            return this.setState( {results: [] });
+          } else {
+            return this.setState({ results: response });
+          }
+        }
+      });
+    };
   }
 
   updateBook = (book, shelf) => {

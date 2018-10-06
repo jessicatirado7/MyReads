@@ -29,4 +29,6 @@ Ryan Waite  [My Read Walkthrough Long](https://www.youtube.com/watch?v=acJHkd6K5
 
 Ryan Waite  [My Read Walkthrough Long](https://www.youtube.com/watch?v=N8bU1oWlLwY&feature=youtu.be).
 
+Steven Remenapp @stevenrem [Udacity Student] (https://gwgnanodegrees.slack.com)
+
 Udacity Students [Slack Channels] (https://gwgnanodegrees.slack.com/messages/CBJKVLGDT/?).
